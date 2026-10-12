@@ -1,0 +1,150 @@
+================================================================
+           ASSIGNMENT DECLARATION & REFLECTION FILE
+================================================================
+
+----------------------------------------------------------------
+1. INTEGRITY PLEDGE & LEARNING INTENT
+----------------------------------------------------------------
+By submitting this file, I certify that the work in this 
+assignment is my own original work. I understand that I am 
+fully responsible for all content, code, and explanations 
+submitted. I have documented all sources of assistance, 
+including human collaborators, traditional resources, and 
+Generative AI tools.
+
+INTENT PLEDGE: Before starting this assignment, my intention 
+for using (or not using) AI tools to support my learning was:
+[X] I plan to use GenAI as an interactive tutor/study aid.
+[ ] I plan to use GenAI only for debugging or syntax help.
+[ ] I do not plan to use GenAI for this assignment.
+
+State briefly how you intended GenAI to support your learning:
+
+    Like on the last assignment, I intended to ask it when I had problems and didn't know where to go from there
+    i.e. to quickly look up specific methods in C++ that I need but don't know how to do yet. Like static_cast<float>() to convert ints to floats
+    i.e. when I get bugs I don't know how to fix, or when I was trying to figure out logic and couldn't think of anything
+    The AI does NOT generate code for me to follow. It gives me a slight guide on the logic I couldn't figure out myself and for help fixing bugs
+    Even though it helps me with logic, I write the actual implementation myself
+
+
+Failure to disclose the actual use of GenAI tools constitutes a 
+breach of academic integrity and will be handled under Academic 
+Misconduct procedures.
+
+----------------------------------------------------------------
+2. HUMAN COLLABORATORS
+----------------------------------------------------------------
+List names of any students you discussed high-level logic with, 
+or TAs/instructors who assisted you.
+
+Sources: 
+    N / A
+
+----------------------------------------------------------------
+3. TRADITIONAL RESOURCES
+----------------------------------------------------------------
+List any documentation, textbooks, or reference sites used 
+(e.g., cppreference.com, language specs, course notes).
+
+Sources:
+    https://s3.amazonaws.com/arena-attachments/2036467/5f88dc9e2d66c7ab734850a87b6ae6ab.pdf?1523606091
+    https://cs.smu.ca/~porter/csc/common_341_342/notes/comlineparams.html
+    https://www.alpharithms.com/ascii-table-512119/ 
+
+----------------------------------------------------------------
+4. GENERATIVE AI PROCESS & REFLECTION
+----------------------------------------------------------------
+Usage of GenAI must be explicitly documented and reflected upon. 
+Credit will only be given for work that is demonstrably your own.
+
+Did you use Generative AI for this assignment? [ NO / YES ]
+YES
+
+a. TOOLS & VERSIONS USED (e.g., ChatGPT 4o, Claude 3.5 Sonnet):
+Google AI Overview
+________________________________________________________________
+
+b. ACTUAL USE vs. INTENT:
+Describe how you actually used the tool(s). Did your usage align 
+with your initial learning intent? State specific prompts or 
+use-cases (e.g., explaining error messages, brainstorming edge 
+cases, reviewing conceptual understanding).
+
+    Like with the last assignment, I asked the AI not to write code for me. I only used it for finding bugs and for helping me when
+    I'm stuck with the logic. For instance, I had trouble spacing the characters correctly. The AI told me that multiplying a 
+    fixed index by a single width was wrong, because it would lead to uneven spacing. Instead, it told me how to do the cursor method. 
+    Keeping track of the position of the cursor where letters are drawn, like a pencil. "Position the character using the current 
+    value of cursor_x." "Advance the cursor by adding the character's visual width plus a small, consistent padding value (tracking gap)
+    to cursor_x." "Move to the next loop iteration, where the next character will automatically sit exactly where the previous one ended."
+    Because it didn't write code for me, I wrote the implementation for this method myself. Granted it was still buggy. The AI pointed that 
+    because I set the character's origin to its center, instead of the left side like default, the transformations were breaking, because the 
+    characters are purposely drawn such that their origins are in places making spacing much easier. Initially, without the AI telling me,
+    I set the character's origins to their centres, so that I could apply transformations to them individually without it looking awkward (This was
+    when I just implemented one character, and didn't have full sentences yet). So the AI suggested I just stop setting origin at the character's 
+    centre. I did that, and the horizontal and vertical spacing were much easier to pull off. Letters with tails, like "p", "g", "y", (negative values
+    in their glyph file) were lined up perfectly when I stopped setting origin at centre. 
+
+    To make it possible to do transformations on the vertex array vectors, I created new classes to store them and make them transformable. The AI helped me
+    declare new classes that inherit from sf::Drawable and sf::Transformable. Considering my limited expereince in C++, defining new classes in C++ is a little
+    more complicated for me compared to Java or Python, and I don't fully understand it yet. If I didn't ask the AI for help defining the headers, it probably would've
+    taken me a lot longer. Despite that, my work in these custom classes was a big learning experience. I understood public vs protected methods and varibales
+    a lot better, understood how to apply transformations and get from the class's data structures directly using syntax like `this->sentence_letters = letters;`
+    Before, I never fully understood how `this->` worked. So I think in this case, the AI laid the foundation to help me understand defining new classes in C++ a lot better.
+    With the other functions in the custom classes, the AI helped me with the logic of the other functions without completely writing it for me. I learned the math for Bezier Curves
+    in class, but AI helped me translate it into a function effectively in getBezierPoint. The AI also showed me how to calculate t by defining a linestrip with many segments, and looping
+    through them, setting t = i / segmentCount. I learned that this was what was actually creating the curve. It was like getting a snapshot of the curve at various intervals, and connecting the dots.
+    The more segments there were, the smoother the curve was. I experimented with smaller and larger segmentCounts. I never would've figured this out myself (I probably could've found this logic on a 
+    website though). 
+
+    Once I had the fundamental logic and implementations complete, polishing and making smaller important fixes was much easier. For example, initally, my sentenceHolder method buildSentenceStructure
+    would put all the letters together without spaces, because the SPACE's ASCII code is 32, and the fonts don't have a gly_32 file (Makes sense, there's nothing to put in a space). So in buildText,
+    when getting ASCII values to know what characters to build, I wrote an if statement that pushes a charContainer with an empty vector of VertexArrays into the sentenceHolder's data structure, a vector
+    of charContainers. Then in buildSentenceStructure, it checks if the current character is empty, and pushes the cursor forward a fixed amount if it is empty. Otherwise, just set the character's position
+    and apply the transformations as usual. I made this guardrail completely independently of AI. 
+
+    The command line arguments I also did with very little help from AI, mostly from websites.
+
+
+c. CRITICAL EVALUATION:
+How did you verify the accuracy of the outputs generated by the AI? 
+Describe any instances where the tool gave incorrect, suboptimal, 
+or misleading guidance, and how you corrected it.
+
+    When I couldn't build and didn't understand the build error, I asked the AI for help. "The LNK2019 and LNK2001 errors are linker errors,
+    meaning your code compiled successfully, but the compiler cannot find the actual definitions (the .cpp code) for the functions you declared in your header file."
+    I was mislead by this, because my custom classes had their headers included, there were no errors with the functions, not in the classes nor in main.
+    The real solution? I opened my project's CMakeLists file, and realized I forgot to add them in the add_executable section. So I added them, and my
+    code compiled and worked. Honestly the AI sometimes makes me overthink issues and spend a lot more time on them when sometimes the solution 
+    is a lot simpler than I expected. But I asked the AI because it was a huge block of red error text, which made me panic and not think of what to do. I'm not proud
+    of that
+
+    While most methods in charContainer and sentenceHolder I wrote myself, the AI broke my request and automatically generated an override
+    for the draw function. I was hoping it would just explain what I need to do, but I didn't expect it to generate a function suddenly. I did end up using these overidden
+    draw functions, because they're simple and they work, and it's an override of a very important method, so I didn't want to mess with things I don't understand as well, 
+    and potentially break the code. I just didn't see a point in trying to force myself to make my own implementation for the draw function. Yes this is obviously wrong, and
+    I'm upset that the AI broke my request. Another sign that I need to become less reliant on it.
+
+
+
+d. INFLUENCE ON FINAL SUBMISSION & LEARNING:
+Reflect on how using (or intentionally avoiding) GenAI influenced 
+your final submission. How did this tool impact your understanding 
+of the core concepts in this assignment compared to working 
+through them without AI assistance?
+
+    Honestly I'm not proud of my relaiance on AI for this assignment. 
+    I feel like I was more reliant on AI for this assignment compared 
+    to the previous one, when I intended to be less reliant. It is kinda
+    my fault for starting the assignment a few days late, if I started earlier,
+    I'd at least have more time to figure things out for myself, instead of
+    asking AI to help me with it quicker. While it did help me gain a much better
+    understanding of object oriented programming in C++, and how to define new classes,
+    I could've learned more effectively by following tutorials and documentation on websites.
+    It would've taken longer but it would be better long term. Since the AI gave me the structure
+    for each class and made the overridden draw functions, and I needed its help translating Bezier Curve
+    math into the code, those were some missed learning opportunitie for me. At least 
+    I wrote my own class methods and implemented their logic with only some help from the AI, instead of
+    it doing all the code for me. I will keep trying to use less AI on future assignments.
+
+
+================================================================
