@@ -63,6 +63,10 @@ void renderingThread(sf::RenderWindow& window, std::atomic<bool>& running, std::
     // Apply all transformations to each letter so it's ready to be displayed
     sentence_holder.buildSentenceStructure(pos, scale_factor);
 
+    // Fits the message on the whole window
+    sentence_holder.setScale(sf::Vector2f(0.09f,0.09f));
+    sentence_holder.setPosition(sf::Vector2f(-0.9f,0.9f));
+
 
     while(running) {
             // Is Key press events check continuously to see if a key is being held down. Makes the movement and scaling smoother and easier
